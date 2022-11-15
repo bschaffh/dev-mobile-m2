@@ -4,26 +4,31 @@ import { View, StyleSheet, Image, Text } from "react-native";
 import Assets from "../constants/assets";
 import Colors from "../constants/colors";
 
-const Movie = ({movie}) => (
-  <View style={styles.container}>
-    <Image style={styles.poster} />
-    <View style={styles.informationContainer}>
-      <Text style={styles.title}>{movie.title}</Text>
-      <Text style={styles.overview} numberOfLines={4}>
-        {movie.overview}
-      </Text>
-      <View style={styles.statsContainer}>
-        <View style={styles.statContainer}>
-          <Image style={styles.icon} source={Assets.icons.voteAverage} />
-          <Text style={styles.voteAverage}>{movie.vote_average}</Text>
-        </View>
-        <View style={styles.statContainer}>
-          <Text style={styles.voteCount}>{movie.vote_count}</Text>
+const Movie = ({movie}) => {
+  const POSTER_BASE_URL = 'https://image.tmdb.org/t/p/original';
+  const isPosterLocal = movie.poster_path;
+  const imageSrc = !isPosterLocal ? require("../../assets/noPoster.jpg") : {uri: `${POSTER_BASE_URL}${movie.poster_path}`};
+  return (
+    <View style={styles.container}>
+      <Image style={styles.poster} source={imageSrc} />
+      <View style={styles.informationContainer}>
+        <Text style={styles.title}>{movie.title}</Text>
+        <Text style={styles.overview} numberOfLines={4}>
+          {movie.overview}
+        </Text>
+        <View style={styles.statsContainer}>
+          <View style={styles.statContainer}>
+            <Image style={styles.icon} source={Assets.icons.voteAverage} />
+            <Text style={styles.voteAverage}>{movie.vote_average}</Text>
+          </View>
+          <View style={styles.statContainer}>
+            <Text style={styles.voteCount}>{movie.vote_count}</Text>
+          </View>
         </View>
       </View>
     </View>
-  </View>
-);
+  );
+};
 
 export default Movie;
 
