@@ -1,14 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Search from "./src/components/SearchComponent";
-
+import RootStack from './src/components/RootStackComponent';
+import { NavigationContainer } from '@react-navigation/native';
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Search/>
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <RootStack style={styles.container}/> 
+    </NavigationContainer>
   );
 }
 

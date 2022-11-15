@@ -1,15 +1,15 @@
 import React from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 
 import Assets from "../constants/assets";
 import Colors from "../constants/colors";
 
-const Movie = ({movie}) => {
+const MovieListElement = ({movie, onPress}) => {
   const POSTER_BASE_URL = 'https://image.tmdb.org/t/p/original';
   const isPosterLocal = movie.poster_path;
   const imageSrc = !isPosterLocal ? require("../../assets/noPoster.jpg") : {uri: `${POSTER_BASE_URL}${movie.poster_path}`};
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <Image style={styles.poster} source={imageSrc} />
       <View style={styles.informationContainer}>
         <Text style={styles.title}>{movie.title}</Text>
@@ -26,11 +26,11 @@ const Movie = ({movie}) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
-export default Movie;
+export default MovieListElement;
 
 const styles = StyleSheet.create({
   container: {
