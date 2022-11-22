@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import RootStack from './src/components/RootStackComponent';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import { store } from './src/store/config';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import BottomTabs from './src/components/BottomTabsComponent';
 
 export default function App() {
   let persistor = persistStore(store);
@@ -12,7 +13,8 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
-          <RootStack style={styles.container}/> 
+          <BottomTabs></BottomTabs>
+          {/* <RootStack style={styles.container}/>  */}
         </NavigationContainer>
       </PersistGate>
     </Provider>

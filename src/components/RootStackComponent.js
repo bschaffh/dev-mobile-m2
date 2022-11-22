@@ -1,15 +1,18 @@
 import Search from "./SearchComponent";
 import { createStackNavigator} from "@react-navigation/stack";
-import { StyleSheet, Text, View } from 'react-native';
 import MovieDetails from "./MovieDetailsComponent";
+import FavoritePage from "./FavoritePageComponent";
+import { FadeOut } from "react-native-reanimated";
 
 const StackNavigator = createStackNavigator();
-function RootStack() {
+
+export function RootStack() {
   return (
     <StackNavigator.Navigator
-      initialRouteName="Recherche" >
+      screenOptions={{headerShown: false}}
+      initialRouteName="RechercheScreen" >
       <StackNavigator.Screen
-        name="Recherche"
+        name="RechercheScreen"
         component={Search} />
     <StackNavigator.Screen
         name="Film"
@@ -18,6 +21,18 @@ function RootStack() {
   );
 }
 
+export function FavStack() {
+  return (
+    <StackNavigator.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName="RechercheA" >
+      <StackNavigator.Screen
+        name="RechercheA"
+        component={FavoritePage} />
+    <StackNavigator.Screen
+        name="FilmA"
+        component={MovieDetails} />
+    </StackNavigator.Navigator>
+  );
+}
 
-
-export default RootStack;

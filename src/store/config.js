@@ -13,7 +13,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const persistConfig = {
-    key:"red",
+    key:"root",
     storage: AsyncStorage
 }
 

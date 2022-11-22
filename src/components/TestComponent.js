@@ -17,8 +17,6 @@ const Test = () => {
                 {id: Date.now().toString(), firstName: firstName, lastName: lastName}
             ]
         );
-        //setCrewNumber(crewNumber + 1);
-        console.log(crewMembers);
     }
 
     return (
