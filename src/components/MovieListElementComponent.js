@@ -1,18 +1,25 @@
 import React from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, Text, TouchableOpacity} from "react-native";
+import { useSelector } from "react-redux";
+import { getPosterSource } from "../api/TMDB";
 
 import Assets from "../constants/assets";
 import Colors from "../constants/colors";
 
 const MovieListElement = ({movie, onPress}) => {
-  const POSTER_BASE_URL = 'https://image.tmdb.org/t/p/original';
-  const isPosterLocal = movie.poster_path;
-  const imageSrc = !isPosterLocal ? require("../../assets/noPoster.jpg") : {uri: `${POSTER_BASE_URL}${movie.poster_path}`};
+  const favoriteMovies = useSelector((state) => state.favorite.favoriteMovies);
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <Image style={styles.poster} source={imageSrc} />
+      <Image style={styles.poster} source={getPosterSource(movie.poster_path)} />
       <View style={styles.informationContainer}>
-        <Text style={styles.title}>{movie.title}</Text>
+        <View style={styles.movieHeader}>
+          <Text style={styles.title}>{movie.title}</Text>
+          {
+            favoriteMovies.includes(movie.id) && 
+              <Image source={Assets.icons.favoriteHeartFull} style={styles.fullHeart}/>
+          }
+        </View>
         <Text style={styles.overview} numberOfLines={4}>
           {movie.overview}
         </Text>
@@ -37,6 +44,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 8,
   },
+  movieHeader:{
+    flexDirection: 'row'
+  },
+  fullHeart:{
+    tintColor: Colors.primary_blue,
+    resizeMode: 'contain', 
+    flex: 1,
+    height: 25,
+    width: 25,
+    margin: 5
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    paddingBottom: 10,
+    flex: 4
+  },
   informationContainer: {
     flex: 1,
     marginLeft: 12,
@@ -57,11 +81,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     borderRadius: 8,
     backgroundColor: Colors.primary_blue,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    paddingBottom: 10
   },
   voteAverage: {
     fontSize: 16,

@@ -1,10 +1,17 @@
 import API_CONFIG from './config';
 
 const TMBD_BASE_URL = 'https://api.themoviedb.org/3';
-const POSTER_BASE_URL = 'https://image.tmdb.org/t/p//original';
 const MOVIE_DETAILS = '/movie';
 const POPULAR_MOVIES = '/movie/popular';
 const FIND_MOVIES = '/search/movie'
+export const POSTER_BASE_URL = 'https://image.tmdb.org/t/p/original';
+
+export const getPosterSource = (posterPath) => {
+    const isPosterLocal = posterPath;
+    let a = !isPosterLocal ? require("../../assets/noPoster.jpg") : {uri: `${POSTER_BASE_URL}${posterPath}`};
+    console.log(a);
+    return a;
+}
 
 const generateHeaders = () => {
     let myHeaders = new Headers();
@@ -51,29 +58,12 @@ export const findPopularMovies = async (page=1) => {
     }
 }
 
-export const getPoster = async (posterPath) => {
-    try {
-        const poster = await fetch(`${POSTER_BASE_URL}${posterPath}`, {
-            header: generateHeaders()
-        })
-
-        return poster;
-    }
-    catch(error){
-        console.log(error);
-        throw error;
-    }
-}
-
 export const getMovieDetailsById = async (movieId) => {
     try {
-        //const movieDetails = await fetch(`${TMBD_BASE_URL}${MOVIE_DETAILS}/${movieId}`, {
-        const movieDetails = await fetch(`https://api.themoviedb.org/3/movie/${movieId}`, {
-            header: generateHeaders()
-        });
+        const movieDetails = await fetch(`${TMBD_BASE_URL}${MOVIE_DETAILS}/${movieId}?api_key=${API_CONFIG.KEY_v3}`, {});
 
         const movieDetailsJson = await movieDetails.json();
-        console.log("----------------" + movieDetailsJson.status_message + "--------");
+        
         if (movieDetailsJson.success != undefined && movieDetailsJson.success == false)
             throw new Error("Impossible de récupérer le film");
 
